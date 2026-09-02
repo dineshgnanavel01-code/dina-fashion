@@ -2,9 +2,9 @@ export default function Footer() {
   const marqueeItems = ['NEW ARRIVALS', 'NEW ARRIVALS', 'NEW ARRIVALS', 'NEW ARRIVALS']
 
   const MarqueeGroup = ({ hidden = false }) => (
-    <div className="aura-marquee-group gap-8 pr-8" aria-hidden={hidden}>
+    <div className="footer-marquee-group gap-8 pr-8" aria-hidden={hidden}>
       {marqueeItems.map((item, index) => (
-        <span key={`${item}-${index}`} className="inline-flex items-center gap-8">
+        <span key={`${item}-${index}`} className="inline-flex items-center gap-8 whitespace-nowrap">
           <span>{item}</span>
           <span className="text-[#b59b62]" aria-hidden="true">&bull;</span>
         </span>
@@ -14,8 +14,41 @@ export default function Footer() {
 
   return (
     <footer className="bg-white text-black font-sans border-t border-black/15">
+      <style>{`
+        @keyframes footerMarquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .footer-animate-marquee {
+          display: flex;
+          width: max-content;
+          min-width: max-content;
+          animation: footerMarquee 22s linear infinite;
+          will-change: transform;
+        }
+        .footer-animate-marquee:hover {
+          animation-play-state: paused;
+        }
+        .footer-marquee-group {
+          display: flex;
+          flex: 0 0 auto;
+          align-items: center;
+        }
+        @media (max-width: 767px) {
+          .footer-animate-marquee {
+            animation-duration: 14s;
+          }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .footer-animate-marquee {
+            animation: none;
+            transform: translateX(0);
+          }
+        }
+      `}</style>
+
       <div className="py-4 border-b border-black/15 overflow-hidden bg-black text-[#f7f4ee] relative">
-        <div className="aura-marquee-track text-[10px] font-bold tracking-[0.35em] uppercase" aria-label="New arrivals marquee">
+        <div className="footer-animate-marquee text-[10px] font-bold tracking-[0.35em] uppercase" aria-label="New arrivals marquee">
           <MarqueeGroup />
           <MarqueeGroup hidden />
         </div>
