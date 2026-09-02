@@ -15,12 +15,13 @@ export default function About() {
       { threshold: 0.2 } 
     )
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current)
+    const section = sectionRef.current
+    if (section) {
+      observer.observe(section)
     }
 
     return () => {
-      if (sectionRef.current) observer.disconnect()
+      if (section) observer.disconnect()
     }
   }, [])
 

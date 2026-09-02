@@ -83,6 +83,39 @@ export default function ProductModal({ product, onClose, onAddToCart }) {
                 ))}
               </div>
             </div>
+
+            <div className="space-y-2 pt-2">
+              <label htmlFor="product-quantity" className="text-[10px] uppercase tracking-[0.2em] text-[#111111] font-medium block">
+                Quantity
+              </label>
+              <div className="inline-flex items-center border border-black/20">
+                <button
+                  type="button"
+                  onClick={() => setQuantity((value) => Math.max(1, value - 1))}
+                  aria-label="Decrease quantity"
+                  className="w-10 h-10 text-lg hover:bg-black hover:text-white transition-colors"
+                >
+                  −
+                </button>
+                <input
+                  id="product-quantity"
+                  type="number"
+                  min="1"
+                  value={quantity}
+                  onChange={(event) => setQuantity(Math.max(1, Number(event.target.value) || 1))}
+                  aria-label="Quantity"
+                  className="w-12 h-10 text-center text-sm bg-transparent focus:outline-none"
+                />
+                <button
+                  type="button"
+                  onClick={() => setQuantity((value) => value + 1)}
+                  aria-label="Increase quantity"
+                  className="w-10 h-10 text-lg hover:bg-black hover:text-white transition-colors"
+                >
+                  +
+                </button>
+              </div>
+            </div>
           </div>
 
       

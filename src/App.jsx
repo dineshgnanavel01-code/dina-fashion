@@ -8,14 +8,12 @@ import CTA from './components/CTA'
 import Footer from './components/Footer'
 import CartDrawer from './components/CartDrawer'
 import Contact from './components/Contact'
-import ProductModal from './components/ProductModal'
 import InfiniteMarquee from './components/InfiniteMarquee'
 
 export default function App() {
   const [currentView, setCurrentView] = useState('home')
   const [cartItems, setCartItems] = useState([])
   const [isCartOpen, setIsCartOpen] = useState(false)
-  const [selectedProduct, setSelectedProduct] = useState(null)
   const [toastMessage, setToastMessage] = useState(null)
 
   const cartCount = cartItems.reduce((total, item) => total + (item.quantity || 1), 0)
@@ -83,9 +81,7 @@ export default function App() {
         ) : (
           <div>
             <Hero />
-            <Collection 
-              onAddToCart={handleAddToCart} 
-              onSelectProduct={(product) => setSelectedProduct(product)} />
+            <Collection onAddToCart={handleAddToCart} />
             <InfiniteMarquee />
             <Lookbook />
             <About />
@@ -104,11 +100,6 @@ export default function App() {
         onRemoveItem={handleRemoveItem}
         onClearCart={handleClearCart}/>
 
-      {selectedProduct && (
-        <ProductModal 
-          product={selectedProduct} 
-          onClose={() => setSelectedProduct(null)}/>
-      )}
     </div>
   )
 }
