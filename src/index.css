@@ -1,31 +1,35 @@
 @import "tailwindcss";
 
+/* ================================
+   Global
+================================ */
 html {
   scroll-behavior: smooth;
-  -ms-overflow-style: none;  
-  scrollbar-width: none; 
-}
-
-html::-webkit-scrollbar {
-  display: none;
-}
-
-body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-
+html::-webkit-scrollbar {
+  display: none;
+}
+body {
+  margin: 0;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
 body::-webkit-scrollbar {
   display: none;
 }
 
+/* ================================
+   Glass Effects
+================================ */
 .aura-glass {
   background: rgba(247, 244, 238, 0.75);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(17, 17, 17, 0.08);
 }
-
 .aura-glass-dark {
   background: rgba(25, 25, 25, 0.85);
   backdrop-filter: blur(16px);
@@ -33,15 +37,19 @@ body::-webkit-scrollbar {
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* ================================
+   Background Effects
+================================ */
 .aura-noise {
-  background-image: radial-gradient(rgba(181, 155, 98, 0.15) 1px, transparent 1px);
+  background-image: radial-gradient(
+    rgba(181, 155, 98, 0.15) 1px,
+    transparent 1px
+  );
   background-size: 24px 24px;
 }
-
 .aura-vignette {
   position: relative;
 }
-
 .aura-vignette::after {
   content: "";
   position: absolute;
@@ -50,10 +58,12 @@ body::-webkit-scrollbar {
   pointer-events: none;
 }
 
+/* ================================
+   Link Hover
+================================ */
 .aura-link-hover {
   position: relative;
 }
-
 .aura-link-hover::after {
   content: "";
   position: absolute;
@@ -64,48 +74,217 @@ body::-webkit-scrollbar {
   background: currentColor;
   transition: width 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
-
 .aura-link-hover:hover::after {
   width: 100%;
 }
 
-@keyframes aura-shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
+/* ================================
+   Scroll Reveal States
+================================ */
+.aura-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1),
+              transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+  will-change: opacity, transform;
+}
+.aura-reveal.active {
+  opacity: 1;
+  transform: translateY(0);
 }
 
+/* ================================
+   Shimmer / Skeleton
+================================ */
+@keyframes aura-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
 .aura-skeleton {
-  background: linear-gradient(90deg, #eee9df 25%, #f7f4ee 50%, #eee9df 75%);
+  background: linear-gradient(
+    90deg,
+    #eee9df 25%,
+    #f7f4ee 50%,
+    #eee9df 75%
+  );
   background-size: 200% 100%;
   animation: aura-shimmer 1.8s infinite;
 }
 
+/* ================================
+   Slow Rotation
+================================ */
 @keyframes aura-spin-slow {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
-
 .aura-badge-spin {
   animation: aura-spin-slow 20s linear infinite;
 }
 
+/* ================================
+   Floating Animation
+================================ */
+@keyframes aura-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.aura-float {
+  animation: aura-float 5s ease-in-out infinite;
+}
+
+/* ================================
+   Pulse
+================================ */
+@keyframes aura-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+}
+.aura-pulse {
+  animation: aura-pulse 2.5s ease-in-out infinite;
+}
+
+/* ================================
+   Marquee
+================================ */
+@keyframes aura-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.aura-marquee {
+  display: flex;
+  width: max-content;
+  animation: aura-marquee 25s linear infinite;
+}
+.aura-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* ================================
+   Image Zoom
+================================ */
+.aura-image-zoom {
+  overflow: hidden;
+}
+.aura-image-zoom img {
+  transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1),
+              filter 0.8s ease;
+}
+.aura-image-zoom:hover img {
+  transform: scale(1.06);
+}
+
+/* ================================
+   Luxury Shadows
+================================ */
 .aura-shadow-luxury {
   box-shadow: 0 20px 40px -15px rgba(17, 17, 17, 0.07);
 }
-
 .aura-shadow-hover {
-  transition: box-shadow 0.5s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition: box-shadow 0.5s cubic-bezier(0.2, 0.7, 0.2, 1),
+              transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
-
 .aura-shadow-hover:hover {
   box-shadow: 0 30px 60px -20px rgba(17, 17, 17, 0.12);
   transform: translateY(-4px);
+}
+
+/* ================================
+   Button Interaction
+================================ */
+.aura-button {
+  transition: transform 0.3s ease,
+              box-shadow 0.3s ease,
+              background-color 0.3s ease;
+}
+.aura-button:hover {
+  transform: translateY(-2px);
+}
+.aura-button:active {
+  transform: translateY(0) scale(0.97);
+}
+
+/* ================================
+   Hotspot
+================================ */
+@keyframes aura-hotspot {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(181, 155, 98, 0.45);
+  }
+  70% {
+    transform: scale(1.08);
+    box-shadow: 0 0 0 12px rgba(181, 155, 98, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(181, 155, 98, 0);
+  }
+}
+.aura-hotspot {
+  animation: aura-hotspot 2s infinite;
+}
+
+/* ================================
+   Page Load
+================================ */
+@keyframes aura-page-load {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.aura-page-load {
+  animation: aura-page-load 0.8s ease-out both;
+}
+
+/* ================================
+   Modal
+================================ */
+@keyframes aura-modal {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.aura-modal {
+  animation: aura-modal 0.35s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+/* ================================
+   Reduced Motion
+================================ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ================================
+   Responsive Safety
+================================ */
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
 }
