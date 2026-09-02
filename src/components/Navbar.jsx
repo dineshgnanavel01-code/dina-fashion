@@ -1,6 +1,21 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
-const navItems = ['Home', 'Collection', 'Lookbook', 'About', 'Contact']
+const navItems = [
+  { label: 'Home', href: '#' },
+  { label: 'Collection', href: '#collection' },
+  { label: 'Lookbook', href: '#lookbook' },
+  { label: 'About', href: '#about' },
+  { label: 'Contact', href: '#contact' },
+]
+
+function BagIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" className="h-[18px] w-[18px] stroke-current stroke-[1.7]">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M6.5 8.5h11l1.05 11.05a1.5 1.5 0 0 1-1.49 1.64H6.94a1.5 1.5 0 0 1-1.49-1.64L6.5 8.5Z" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M9 9V6.75a3 3 0 0 1 6 0V9" />
+    </svg>
+  )
+}
 
 export default function Navbar({ cartCount = 0, onOpenCart }) {
   const [isOpen, setIsOpen] = useState(false)
@@ -8,118 +23,145 @@ export default function Navbar({ cartCount = 0, onOpenCart }) {
 
   useEffect(() => {
     const handleScroll = () => {
-      const hasScrolled = window.scrollY > 30
-      setScrolled(hasScrolled)
-      if (hasScrolled) setIsOpen(false)
+      setScrolled(window.scrollY > 24)
+      if (window.scrollY > 24) setIsOpen(false)
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const getHref = (item) => (item === 'Home' ? '#' : `#${item.toLowerCase()}`)
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? 'hidden' : ''
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isOpen])
+
+  const closeMenu = () => setIsOpen(false)
 
   return (
     <header
-      className={`sticky top-0 z-50 font-sans transition-all duration-500 ${
+      className={`sticky top-0 z-50 w-full font-sans transition-all duration-500 ${
         scrolled
-          ? 'bg-[#f7f4ee]/95 backdrop-blur-md shadow-md border-b border-black/20'
-          : 'bg-[#f7f4ee] border-b border-black/15'
+          ? 'border-b border-black/10 bg-[#f7f4ee]/90 shadow-[0_8px_30px_rgba(0,0,0,0.06)] backdrop-blur-xl'
+          : 'border-b border-black/10 bg-[#f7f4ee]'
       }`}
     >
+      {/* Main navbar: exactly three columns keeps AURA mathematically centered. */}
       <div
-        className={`mx-auto grid w-full max-w-[1440px] grid-cols-[1fr_auto_1fr] items-center px-5 sm:px-8 lg:px-12 transition-all duration-500 ${
-          scrolled ? 'h-[72px]' : 'h-[76px] md:h-[88px]'
+        className={`mx-auto grid w-full max-w-[1440px] grid-cols-[1fr_auto_1fr] items-center px-4 transition-all duration-500 sm:px-6 lg:px-10 xl:px-12 ${
+          scrolled ? 'h-[68px] sm:h-[72px]' : 'h-[76px] sm:h-[84px]'
         }`}
       >
-        {/* Left: mobile menu / desktop shopping bag */}
+        {/* LEFT */}
         <div className="flex min-w-0 items-center justify-start">
+          {/* Mobile hamburger */}
           <button
             type="button"
             onClick={() => setIsOpen((open) => !open)}
-            className="md:hidden relative flex h-10 w-10 shrink-0 flex-col items-center justify-center gap-1.5 rounded-full border border-black/15 bg-black/[0.03] transition-all duration-300 hover:border-black/40 active:scale-90"
+            className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-black/15 transition-all duration-300 hover:border-black/40 hover:bg-black/[0.04] active:scale-90 md:hidden"
             aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
             aria-expanded={isOpen}
           >
-            <span className={`h-0.5 w-5 bg-black transition-transform duration-300 ${isOpen ? 'translate-y-2 rotate-45' : ''}`} />
-            <span className={`h-0.5 w-5 bg-black transition-opacity duration-300 ${isOpen ? 'opacity-0' : 'opacity-100'}`} />
-            <span className={`h-0.5 w-5 bg-black transition-transform duration-300 ${isOpen ? '-translate-y-2 -rotate-45' : ''}`} />
+            <span className="relative block h-4 w-5">
+              <span className={`absolute left-0 top-0 h-[1.5px] w-5 origin-center bg-black transition-all duration-300 ${isOpen ? 'top-[7px] rotate-45' : ''}`} />
+              <span className={`absolute left-0 top-[7px] h-[1.5px] w-5 bg-black transition-all duration-200 ${isOpen ? 'opacity-0' : 'opacity-100'}`} />
+              <span className={`absolute left-0 top-[14px] h-[1.5px] w-5 origin-center bg-black transition-all duration-300 ${isOpen ? 'top-[7px] -rotate-45' : ''}`} />
+            </span>
           </button>
 
+          {/* Desktop bag */}
           <button
             type="button"
             onClick={onOpenCart}
-            className="group hidden md:flex items-center gap-2 rounded-full border border-black/20 bg-black/5 px-4 py-2 transition-all duration-300 hover:border-black hover:bg-black/10 active:scale-95"
-            aria-label={`Shopping Bag, ${cartCount} items`}
+            className="group hidden items-center gap-2 rounded-full border border-black/15 px-3.5 py-2 transition-all duration-300 hover:border-black hover:bg-black/[0.04] active:scale-95 md:flex"
+            aria-label={`Shopping bag, ${cartCount} items`}
           >
-            <svg className="h-4 w-4 shrink-0 stroke-black stroke-2 transition-transform duration-300 group-hover:scale-110" fill="none" viewBox="0 0 24 24" aria-hidden="true">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974a1.125 1.125 0 011.119 1.007z" />
-            </svg>
-            <span className="text-[11px] font-bold tracking-widest uppercase text-black">Bag</span>
-            <span className="text-[11px] font-bold text-[#b59b62]">({cartCount})</span>
+            <BagIcon />
+            <span className="text-[10px] font-semibold uppercase tracking-[0.18em]">Bag</span>
+            <span className="text-[10px] font-semibold tabular-nums text-[#a58952]">({cartCount})</span>
           </button>
         </div>
 
-        {/* Center: brand — centered by the 3-column layout */}
+        {/* CENTER: AURA */}
         <a
           href="#"
-          className="group flex min-w-0 items-center justify-center gap-2 justify-self-center"
+          onClick={closeMenu}
+          className="group flex min-w-0 items-center justify-center gap-2.5 justify-self-center whitespace-nowrap"
           aria-label="AURA home"
         >
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-black text-[#f7f4ee] shadow-sm transition-all duration-300 group-hover:bg-[#b59b62] group-hover:scale-105 sm:h-9 sm:w-9">
-            <svg className="h-4 w-4 fill-none stroke-current stroke-2" viewBox="0 0 24 24" aria-hidden="true">
-              <polygon points="12,4 20,20 4,20" />
+          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#111] text-[#f7f4ee] transition-all duration-300 group-hover:scale-105 group-hover:bg-[#a58952] sm:h-9 sm:w-9">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" className="h-4 w-4 stroke-current stroke-[1.6] sm:h-[18px] sm:w-[18px]">
+              <path strokeLinecap="round" strokeLinejoin="round" d="m12 4 7.5 16h-15L12 4Z" />
             </svg>
-          </div>
-          <span className="font-serif text-xl sm:text-2xl md:text-3xl tracking-[0.14em] sm:tracking-[0.18em] text-black font-bold transition-opacity duration-300 group-hover:opacity-75">
+          </span>
+          <span className="font-serif text-[21px] font-bold leading-none tracking-[0.16em] text-black transition-opacity duration-300 group-hover:opacity-70 sm:text-[25px] md:text-[27px]">
             AURA
           </span>
         </a>
 
-        {/* Right: desktop navigation / mobile shopping bag */}
+        {/* RIGHT */}
         <div className="flex min-w-0 items-center justify-end">
-          <nav className="hidden md:flex items-center justify-end gap-5 lg:gap-8 xl:gap-10 text-[11px] font-bold tracking-[0.16em] lg:tracking-[0.2em] uppercase text-black">
+          {/* Desktop navigation */}
+          <nav aria-label="Main navigation" className="hidden items-center justify-end gap-4 lg:flex xl:gap-7">
             {navItems.map((item) => (
               <a
-                key={item}
-                href={getHref(item)}
-                className="relative whitespace-nowrap py-2 transition-colors hover:text-[#b59b62] after:absolute after:bottom-1 after:left-1/2 after:h-0.5 after:w-0 after:-translate-x-1/2 after:bg-[#b59b62] after:transition-all after:duration-300 hover:after:w-1/2"
+                key={item.label}
+                href={item.href}
+                className="group relative whitespace-nowrap py-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-black transition-colors duration-300 hover:text-[#a58952] xl:text-[11px] xl:tracking-[0.18em]"
               >
-                {item}
+                {item.label}
+                <span className="absolute bottom-1 left-1/2 h-px w-0 -translate-x-1/2 bg-[#a58952] transition-all duration-300 group-hover:w-1/2" />
               </a>
             ))}
           </nav>
 
+          {/* Tablet: compact navigation */}
+          <nav aria-label="Tablet navigation" className="hidden items-center justify-end gap-3 md:flex lg:hidden">
+            {navItems.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                className="whitespace-nowrap px-1 text-[9px] font-semibold uppercase tracking-[0.11em] text-black transition-colors hover:text-[#a58952]"
+              >
+                {item.label}
+              </a>
+            ))}
+          </nav>
+
+          {/* Mobile bag */}
           <button
             type="button"
             onClick={onOpenCart}
-            className="md:hidden group flex h-10 shrink-0 items-center gap-1.5 rounded-full border border-black/20 bg-black/5 px-3 transition-all duration-300 hover:border-black hover:bg-black/10 active:scale-95"
-            aria-label={`Shopping Bag, ${cartCount} items`}
+            className="flex h-10 shrink-0 items-center gap-1.5 rounded-full border border-black/15 px-3 transition-all duration-300 hover:border-black hover:bg-black/[0.04] active:scale-95 md:hidden"
+            aria-label={`Shopping bag, ${cartCount} items`}
           >
-            <svg className="h-4 w-4 stroke-black stroke-2" fill="none" viewBox="0 0 24 24" aria-hidden="true">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974a1.125 1.125 0 011.119 1.007z" />
-            </svg>
-            <span className="text-[11px] font-bold text-[#b59b62]">({cartCount})</span>
+            <BagIcon />
+            <span className="text-[10px] font-semibold tabular-nums text-[#a58952]">{cartCount}</span>
           </button>
         </div>
       </div>
 
-      {/* Mobile navigation */}
+      {/* Mobile menu */}
       <div
-        className={`md:hidden absolute left-0 top-full w-full overflow-hidden border-b border-black/20 bg-[#f7f4ee]/98 shadow-xl backdrop-blur-md transition-all duration-400 ease-out ${
-          isOpen ? 'pointer-events-auto max-h-[420px] translate-y-0 opacity-100' : 'pointer-events-none max-h-0 -translate-y-2 opacity-0'
+        className={`absolute left-0 top-full w-full overflow-hidden border-b border-black/10 bg-[#f7f4ee]/98 shadow-2xl backdrop-blur-xl transition-[max-height,opacity,transform] duration-500 ease-out md:hidden ${
+          isOpen
+            ? 'pointer-events-auto max-h-[420px] translate-y-0 opacity-100'
+            : 'pointer-events-none max-h-0 -translate-y-2 opacity-0'
         }`}
       >
-        <nav className="mx-auto flex max-w-[1440px] flex-col px-5 py-4 text-center text-xs font-bold tracking-[0.22em] uppercase text-black sm:px-8">
+        <nav aria-label="Mobile navigation" className="px-5 pb-5 pt-2 sm:px-8">
           {navItems.map((item, index) => (
             <a
-              key={item}
-              href={getHref(item)}
-              onClick={() => setIsOpen(false)}
-              className="border-b border-black/10 py-4 transition-all duration-300 hover:bg-black/[0.03] hover:text-[#b59b62] active:scale-[0.98]"
+              key={item.label}
+              href={item.href}
+              onClick={closeMenu}
+              className="group flex items-center justify-between border-b border-black/10 py-4 text-[11px] font-semibold uppercase tracking-[0.22em] text-black transition-all duration-300 hover:pl-2 hover:text-[#a58952]"
               style={{ transitionDelay: isOpen ? `${index * 35}ms` : '0ms' }}
             >
-              {item}
+              <span>{item.label}</span>
+              <span className="translate-x-0 text-[#a58952] opacity-0 transition-all duration-300 group-hover:translate-x-1 group-hover:opacity-100">↗</span>
             </a>
           ))}
         </nav>
