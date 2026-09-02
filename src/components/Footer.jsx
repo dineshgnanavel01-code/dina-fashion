@@ -2,7 +2,7 @@ export default function Footer() {
   const marqueeItems = ['NEW ARRIVALS', 'NEW ARRIVALS', 'NEW ARRIVALS', 'NEW ARRIVALS']
 
   const MarqueeGroup = ({ hidden = false }) => (
-    <div className="flex shrink-0 items-center gap-8 pr-8" aria-hidden={hidden}>
+    <div className="aura-marquee-group gap-8 pr-8" aria-hidden={hidden}>
       {marqueeItems.map((item, index) => (
         <span key={`${item}-${index}`} className="inline-flex items-center gap-8">
           <span>{item}</span>
@@ -15,7 +15,7 @@ export default function Footer() {
   return (
     <footer className="bg-white text-black font-sans border-t border-black/15">
       <div className="py-4 border-b border-black/15 overflow-hidden bg-black text-[#f7f4ee] relative">
-        <div className="flex w-max animate-marquee text-[10px] font-bold tracking-[0.35em] uppercase" aria-label="New arrivals marquee">
+        <div className="aura-marquee-track text-[10px] font-bold tracking-[0.35em] uppercase" aria-label="New arrivals marquee">
           <MarqueeGroup />
           <MarqueeGroup hidden />
         </div>
@@ -56,21 +56,10 @@ export default function Footer() {
           <div className="space-y-5">
             <h4 className="text-[11px] font-bold tracking-[0.3em] uppercase text-[#b59b62]">Connect</h4>
             <div className="flex flex-col space-y-3.5 text-xs text-black/80 font-bold tracking-wider">
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="aura-link-hover hover:text-black transition-colors flex items-center gap-3 group">
-                <span className="w-7 h-7 rounded-full border border-black/20 flex items-center justify-center group-hover:border-black group-hover:bg-black group-hover:text-white transition-all">Instagram</span>
-              </a>
-              <a href="https://pinterest.com" target="_blank" rel="noopener noreferrer" className="aura-link-hover hover:text-black transition-colors flex items-center gap-3 group">
-                <span className="w-7 h-7 rounded-full border border-black/20 flex items-center justify-center group-hover:border-black group-hover:bg-black group-hover:text-white transition-all">P</span>
-                Pinterest
-              </a>
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="aura-link-hover hover:text-black transition-colors flex items-center gap-3 group">
-                <span className="w-7 h-7 rounded-full border border-black/20 flex items-center justify-center group-hover:border-black group-hover:bg-black group-hover:text-white transition-all">X</span>
-                Twitter / X
-              </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="aura-link-hover hover:text-black transition-colors flex items-center gap-3 group">
-                <span className="w-7 h-7 rounded-full border border-black/20 flex items-center justify-center group-hover:border-black group-hover:bg-black group-hover:text-white transition-all">in</span>
-                LinkedIn
-              </a>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="aura-link-hover hover:text-black transition-colors flex items-center gap-3 group"><span className="w-7 h-7 rounded-full border border-black/20 flex items-center justify-center group-hover:border-black group-hover:bg-black group-hover:text-white transition-all">Instagram</span></a>
+              <a href="https://pinterest.com" target="_blank" rel="noopener noreferrer" className="aura-link-hover hover:text-black transition-colors flex items-center gap-3 group"><span className="w-7 h-7 rounded-full border border-black/20 flex items-center justify-center group-hover:border-black group-hover:bg-black group-hover:text-white transition-all">P</span> Pinterest</a>
+              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="aura-link-hover hover:text-black transition-colors flex items-center gap-3 group"><span className="w-7 h-7 rounded-full border border-black/20 flex items-center justify-center group-hover:border-black group-hover:bg-black group-hover:text-white transition-all">X</span> Twitter / X</a>
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="aura-link-hover hover:text-black transition-colors flex items-center gap-3 group"><span className="w-7 h-7 rounded-full border border-black/20 flex items-center justify-center group-hover:border-black group-hover:bg-black group-hover:text-white transition-all">in</span> LinkedIn</a>
             </div>
           </div>
         </div>
