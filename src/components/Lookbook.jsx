@@ -65,15 +65,15 @@ export default function Lookbook() {
           <div className="flex justify-center items-center gap-3 mb-3">
             <div className="h-px w-6 bg-[#b59b62]"></div>
             <span className="text-[10px] font-semibold tracking-[0.3em] uppercase text-black">
-              Visual Journal
+              The Editorial View
             </span>
             <div className="h-px w-6 bg-[#b59b62]"></div>
           </div>
           <h2 className="font-serif text-3xl md:text-5xl text-black tracking-tight font-semibold">
-            Interactive Lookbook
+            Stories in Motion
           </h2>
           <p className="text-black text-sm mt-4 font-normal tracking-wide">
-            Explore our curated outfits. Tap the flashing indicators to discover each component.
+            Explore each look and select a glowing point to reveal the pieces that bring it together.
           </p>
         </div>
 
@@ -125,7 +125,7 @@ export default function Lookbook() {
                           <button 
                             onClick={() => setActiveHotspot(null)}
                             className="mt-3 w-full py-1.5 bg-white text-black text-[9px] uppercase tracking-[0.2em] font-semibold hover:bg-[#b59b62] hover:text-white transition-colors">
-                            Close Preview
+                            Close Details
                           </button>
                         </div>
                       )}

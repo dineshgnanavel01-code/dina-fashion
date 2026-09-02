@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import Collection from './components/Collection'
@@ -8,14 +8,43 @@ import CTA from './components/CTA'
 import Footer from './components/Footer'
 import CartDrawer from './components/CartDrawer'
 import Contact from './components/Contact'
-import ProductModal from './components/ProductModal'
 import InfiniteMarquee from './components/InfiniteMarquee'
+
+function usePageScrollAnimations(currentView) {
+  useEffect(() => {
+    const targets = document.querySelectorAll('main section, footer')
+    if (!targets.length) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return
+
+          entry.target.classList.add('is-visible')
+          entry.target.querySelectorAll('img').forEach((image) => {
+            image.classList.add('aura-scroll-image-visible')
+          })
+          observer.unobserve(entry.target)
+        })
+      },
+      { threshold: 0.08, rootMargin: '0px 0px -60px 0px' }
+    )
+
+    targets.forEach((target) => {
+      target.classList.add('aura-section-reveal')
+      observer.observe(target)
+    })
+
+    return () => observer.disconnect()
+  }, [currentView])
+}
 
 export default function App() {
   const [currentView, setCurrentView] = useState('home')
+  usePageScrollAnimations(currentView)
+
   const [cartItems, setCartItems] = useState([])
   const [isCartOpen, setIsCartOpen] = useState(false)
-  const [selectedProduct, setSelectedProduct] = useState(null)
   const [toastMessage, setToastMessage] = useState(null)
 
   const cartCount = cartItems.reduce((total, item) => total + (item.quantity || 1), 0)
@@ -55,9 +84,7 @@ export default function App() {
     setCartItems(prev => prev.filter(item => `${item.id}-${item.size || 'default'}` !== uniqueKey))
   }
 
-  const handleClearCart = () => {
-    setCartItems([])
-  }
+  const handleClearCart = () => setCartItems([])
 
   return (
     <div className="font-sans antialiased text-[#111111] bg-[#f7f4ee] min-h-screen flex flex-col justify-between">
@@ -68,24 +95,21 @@ export default function App() {
         </div>
       )}
 
-      <Navbar 
-        cartCount={cartCount} 
-        onOpenCart={() => setIsCartOpen(true)} 
+      <Navbar
+        cartCount={cartCount}
+        onOpenCart={() => setIsCartOpen(true)}
         activePage={currentView}
         onNavigate={(page) => {
           setCurrentView(page)
           window.scrollTo({ top: 0, behavior: 'smooth' })
-        }} />
+        }}
+      />
 
       <main className="min-h-screen flex flex-col bg-[#f7f4ee]">
-        {currentView === 'contact' ? (
-          <Contact />
-        ) : (
+        {currentView === 'contact' ? <Contact /> : (
           <div>
             <Hero />
-            <Collection 
-              onAddToCart={handleAddToCart} 
-              onSelectProduct={(product) => setSelectedProduct(product)} />
+            <Collection onAddToCart={handleAddToCart} />
             <InfiniteMarquee />
             <Lookbook />
             <About />
@@ -96,19 +120,14 @@ export default function App() {
 
       <Footer />
 
-      <CartDrawer 
+      <CartDrawer
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
         cartItems={cartItems}
         onUpdateQuantity={handleUpdateQuantity}
         onRemoveItem={handleRemoveItem}
-        onClearCart={handleClearCart}/>
-
-      {selectedProduct && (
-        <ProductModal 
-          product={selectedProduct} 
-          onClose={() => setSelectedProduct(null)}/>
-      )}
+        onClearCart={handleClearCart}
+      />
     </div>
   )
 }

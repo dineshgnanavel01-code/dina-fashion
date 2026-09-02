@@ -116,7 +116,6 @@ export const products = [
     discount: "53% OFF",
     image: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=900&q=85",
   },
-,
   {
     id: 15,
     name: "Pleated Midi Skirt",
