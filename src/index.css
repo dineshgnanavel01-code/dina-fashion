@@ -1,61 +1,107 @@
 @import "tailwindcss";
 
-/* ================================
-   Global
-================================ */
+/* Global */
 html {
   scroll-behavior: smooth;
-<<<<<<< HEAD
-  -ms-overflow-style: none;
-=======
   scrollbar-width: none;
   -ms-overflow-style: none;
   scroll-padding-top: 90px;
 }
 
 html::-webkit-scrollbar,
-body::-webkit-scrollbar { display: none; width: 0; height: 0; }
-
-body {
->>>>>>> cc50cb00aed2a12c1109c2988eeac6578f61dcf6
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  overflow-x: hidden;
-  margin: 0;
-}
-<<<<<<< HEAD
-html::-webkit-scrollbar {
-  display: none;
-}
-body {
-  margin: 0;
-  overflow-x: hidden;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
 body::-webkit-scrollbar {
   display: none;
+  width: 0;
+  height: 0;
 }
 
-/* ================================
-   Glass Effects
-================================ */
-=======
+body {
+  margin: 0;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
 
-/* Every major section reveals as it enters the viewport. */
-.aura-section-reveal {
+img,
+video,
+svg {
+  max-width: 100%;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Glass */
+.aura-glass {
+  background: rgba(247, 244, 238, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(17, 17, 17, 0.08);
+}
+
+.aura-glass-dark {
+  background: rgba(25, 25, 25, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.aura-noise {
+  background-image: radial-gradient(rgba(181, 155, 98, 0.15) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.aura-vignette {
+  position: relative;
+}
+
+.aura-vignette::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 80px rgba(17, 17, 17, 0.2);
+  pointer-events: none;
+}
+
+/* Scroll reveal */
+.aura-section-reveal,
+.aura-reveal {
   opacity: 0;
   transform: translate3d(0, 32px, 0);
-  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 0.7, 0.2, 1);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
   will-change: opacity, transform;
 }
 
-.aura-section-reveal.is-visible {
+.aura-section-reveal.is-visible,
+.aura-reveal.is-visible,
+.aura-reveal.active {
   opacity: 1;
   transform: translate3d(0, 0, 0);
 }
 
-/* Image transform starts only after the section scrolls into view. */
+.aura-reveal-left {
+  transform: translate3d(-42px, 0, 0);
+}
+
+.aura-reveal-right {
+  transform: translate3d(42px, 0, 0);
+}
+
+.aura-reveal-scale {
+  transform: scale(0.94);
+}
+
+.aura-reveal.is-visible.aura-reveal-scale {
+  transform: scale(1);
+}
+
+.aura-delay-1 { transition-delay: 0.08s; }
+.aura-delay-2 { transition-delay: 0.16s; }
+.aura-delay-3 { transition-delay: 0.24s; }
+.aura-delay-4 { transition-delay: 0.32s; }
+
 .aura-section-reveal img {
   transform: scale(1.045);
   transition: transform 0.5s cubic-bezier(0.22, 0.7, 0.2, 1), filter 0.5s ease;
@@ -66,140 +112,106 @@ body::-webkit-scrollbar {
   transform: scale(1);
 }
 
-/* Reusable reveal utilities */
-.aura-reveal {
-  opacity: 0;
-  transform: translate3d(0, 42px, 0);
-  transition: opacity 0.85s ease, transform 0.85s cubic-bezier(0.2, 0.7, 0.2, 1);
-  will-change: opacity, transform;
-}
-.aura-reveal.is-visible { opacity: 1; transform: translate3d(0, 0, 0); }
-.aura-reveal-left { transform: translate3d(-42px, 0, 0); }
-.aura-reveal-right { transform: translate3d(42px, 0, 0); }
-.aura-reveal-scale { transform: scale(0.94); }
-.aura-reveal.is-visible.aura-reveal-left,
-.aura-reveal.is-visible.aura-reveal-right { transform: translate3d(0, 0, 0); }
-.aura-reveal.is-visible.aura-reveal-scale { transform: scale(1); }
-.aura-delay-1 { transition-delay: 0.08s; }
-.aura-delay-2 { transition-delay: 0.16s; }
-.aura-delay-3 { transition-delay: 0.24s; }
-.aura-delay-4 { transition-delay: 0.32s; }
-
 /* Page-load */
 @keyframes aura-fade-up {
   from { opacity: 0; transform: translate3d(0, 28px, 0); }
   to { opacity: 1; transform: translate3d(0, 0, 0); }
 }
-.aura-fade-up { animation: aura-fade-up 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
-@keyframes aura-fade-in { from { opacity: 0; } to { opacity: 1; } }
-.aura-fade-in { animation: aura-fade-in 0.9s ease both; }
 
-/* Hover image zoom */
-.aura-image-wrap { overflow: hidden; }
+.aura-fade-up {
+  animation: aura-fade-up 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes aura-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.aura-fade-in {
+  animation: aura-fade-in 0.9s ease both;
+}
+
+.aura-page-load {
+  animation: aura-fade-up 0.8s ease-out both;
+}
+
+/* Image zoom */
+.aura-image-wrap,
+.aura-image-zoom {
+  overflow: hidden;
+}
+
 .aura-image-wrap img,
-.aura-product-image img {
-  transform: scale(1.001);
-  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1), filter 0.5s ease;
+.aura-product-image img,
+.aura-image-zoom img {
+  transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1), filter 0.5s ease;
   will-change: transform;
 }
-.aura-image-wrap:hover img,
-.aura-product-image:hover img { transform: scale(1.07); }
 
-/* Floating visual detail */
+.aura-image-wrap:hover img,
+.aura-product-image:hover img,
+.aura-image-zoom:hover img {
+  transform: scale(1.06);
+}
+
+/* Floating */
 @keyframes aura-float {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+  50% { transform: translateY(-10px); }
 }
-.aura-float { animation: aura-float 6s ease-in-out infinite; }
 
-/* Buttons / links */
-.aura-button,
-button,
-a[role="button"] { -webkit-tap-highlight-color: transparent; }
-.aura-button:active,
-button:active,
-a[role="button"]:active { transform: scale(0.97); }
-.aura-link-hover { position: relative; }
-.aura-link-hover::after {
-  content: ""; position: absolute; bottom: -2px; left: 0; width: 0; height: 1px;
-  background: currentColor; transition: width 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+.aura-float {
+  animation: aura-float 5s ease-in-out infinite;
 }
-.aura-link-hover:hover::after { width: 100%; }
 
-/* Seamless infinite marquee: the component renders two identical groups. */
+/* Pulse */
+@keyframes aura-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+}
+
+.aura-pulse {
+  animation: aura-pulse 2.5s ease-in-out infinite;
+}
+
+/* Marquee */
 @keyframes aura-marquee {
   from { transform: translate3d(0, 0, 0); }
   to { transform: translate3d(-50%, 0, 0); }
 }
+
+.aura-marquee,
 .animate-marquee {
+  display: flex;
   width: max-content;
   animation: aura-marquee 24s linear infinite;
   will-change: transform;
 }
-.animate-marquee:hover { animation-play-state: paused; }
 
-/* Lookbook hotspot */
-@keyframes aura-hotspot-pulse {
-  0%, 100% { transform: scale(1); opacity: 0.75; }
-  50% { transform: scale(1.45); opacity: 0.18; }
-}
-.aura-hotspot-pulse { animation: aura-hotspot-pulse 1.8s ease-in-out infinite; }
-
-/* Modal / popup */
-@keyframes aura-modal-backdrop { from { opacity: 0; } to { opacity: 1; } }
-@keyframes aura-modal-in {
-  from { opacity: 0; transform: translate3d(0, 24px, 0) scale(0.96); }
-  to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
-}
-.aura-modal-backdrop { animation: aura-modal-backdrop 0.3s ease both; }
-.aura-modal-panel { animation: aura-modal-in 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
-
-/* Glass */
->>>>>>> cc50cb00aed2a12c1109c2988eeac6578f61dcf6
-.aura-glass {
-  background: rgba(247, 244, 238, 0.75);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(17, 17, 17, 0.08);
-}
-.aura-glass-dark {
-  background: rgba(25, 25, 25, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-<<<<<<< HEAD
-
-/* ================================
-   Background Effects
-================================ */
-=======
->>>>>>> cc50cb00aed2a12c1109c2988eeac6578f61dcf6
-.aura-noise {
-  background-image: radial-gradient(
-    rgba(181, 155, 98, 0.15) 1px,
-    transparent 1px
-  );
-  background-size: 24px 24px;
-}
-<<<<<<< HEAD
-.aura-vignette {
-  position: relative;
-}
-.aura-vignette::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  box-shadow: inset 0 0 80px rgba(17, 17, 17, 0.2);
-  pointer-events: none;
+.aura-marquee:hover,
+.animate-marquee:hover {
+  animation-play-state: paused;
 }
 
-/* ================================
-   Link Hover
-================================ */
+/* Buttons and links */
+.aura-button {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.aura-button:hover {
+  transform: translateY(-2px);
+}
+
+.aura-button:active,
+button:active,
+a[role="button"]:active {
+  transform: scale(0.97);
+}
+
 .aura-link-hover {
   position: relative;
 }
+
 .aura-link-hover::after {
   content: "";
   position: absolute;
@@ -210,162 +222,50 @@ a[role="button"]:active { transform: scale(0.97); }
   background: currentColor;
   transition: width 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
+
 .aura-link-hover:hover::after {
   width: 100%;
 }
 
-/* ================================
-   Scroll Reveal States
-================================ */
-.aura-reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1),
-              transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
-  will-change: opacity, transform;
-}
-.aura-reveal.active {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ================================
-   Shimmer / Skeleton
-================================ */
-@keyframes aura-shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-.aura-skeleton {
-  background: linear-gradient(
-    90deg,
-    #eee9df 25%,
-    #f7f4ee 50%,
-    #eee9df 75%
-  );
-  background-size: 200% 100%;
-  animation: aura-shimmer 1.8s infinite;
-}
-
-/* ================================
-   Slow Rotation
-================================ */
-@keyframes aura-spin-slow {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-.aura-badge-spin {
-  animation: aura-spin-slow 20s linear infinite;
-}
-
-/* ================================
-   Floating Animation
-================================ */
-@keyframes aura-float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-.aura-float {
-  animation: aura-float 5s ease-in-out infinite;
-}
-
-/* ================================
-   Pulse
-================================ */
-@keyframes aura-pulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.05); opacity: 0.8; }
-}
-.aura-pulse {
-  animation: aura-pulse 2.5s ease-in-out infinite;
-}
-
-/* ================================
-   Marquee
-================================ */
-@keyframes aura-marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-.aura-marquee {
-  display: flex;
-  width: max-content;
-  animation: aura-marquee 25s linear infinite;
-}
-.aura-marquee:hover {
-  animation-play-state: paused;
-}
-
-/* ================================
-   Image Zoom
-================================ */
-.aura-image-zoom {
-  overflow: hidden;
-}
-.aura-image-zoom img {
-  transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1),
-              filter 0.8s ease;
-}
-.aura-image-zoom:hover img {
-  transform: scale(1.06);
-}
-
-/* ================================
-   Luxury Shadows
-================================ */
+/* Shadows */
 .aura-shadow-luxury {
   box-shadow: 0 20px 40px -15px rgba(17, 17, 17, 0.07);
 }
-=======
-.aura-vignette { position: relative; }
-.aura-vignette::after {
-  content: ""; position: absolute; inset: 0;
-  box-shadow: inset 0 0 80px rgba(17, 17, 17, 0.2); pointer-events: none;
+
+.aura-shadow-hover {
+  transition: box-shadow 0.5s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
-/* Existing loading / decorative animations */
-@keyframes aura-shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-.aura-skeleton {
-  background: linear-gradient(90deg, #eee9df 25%, #f7f4ee 50%, #eee9df 75%);
-  background-size: 200% 100%; animation: aura-shimmer 1.8s infinite;
-}
-@keyframes aura-spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-.aura-badge-spin { animation: aura-spin-slow 20s linear infinite; }
-.aura-shadow-luxury { box-shadow: 0 20px 40px -15px rgba(17, 17, 17, 0.07); }
->>>>>>> cc50cb00aed2a12c1109c2988eeac6578f61dcf6
-.aura-shadow-hover {
-  transition: box-shadow 0.5s cubic-bezier(0.2, 0.7, 0.2, 1),
-              transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-<<<<<<< HEAD
 .aura-shadow-hover:hover {
   box-shadow: 0 30px 60px -20px rgba(17, 17, 17, 0.12);
   transform: translateY(-4px);
 }
 
-/* ================================
-   Button Interaction
-================================ */
-.aura-button {
-  transition: transform 0.3s ease,
-              box-shadow 0.3s ease,
-              background-color 0.3s ease;
-}
-.aura-button:hover {
-  transform: translateY(-2px);
-}
-.aura-button:active {
-  transform: translateY(0) scale(0.97);
+/* Skeleton */
+@keyframes aura-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
 
-/* ================================
-   Hotspot
-================================ */
+.aura-skeleton {
+  background: linear-gradient(90deg, #eee9df 25%, #f7f4ee 50%, #eee9df 75%);
+  background-size: 200% 100%;
+  animation: aura-shimmer 1.8s infinite;
+}
+
+/* Slow rotation */
+@keyframes aura-spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.aura-badge-spin {
+  animation: aura-spin-slow 20s linear infinite;
+}
+
+/* Hotspots */
 @keyframes aura-hotspot {
-  0% {
+  0%, 100% {
     transform: scale(1);
     box-shadow: 0 0 0 0 rgba(181, 155, 98, 0.45);
   }
@@ -373,94 +273,72 @@ a[role="button"]:active { transform: scale(0.97); }
     transform: scale(1.08);
     box-shadow: 0 0 0 12px rgba(181, 155, 98, 0);
   }
-  100% {
-    transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(181, 155, 98, 0);
-  }
 }
+
 .aura-hotspot {
   animation: aura-hotspot 2s infinite;
 }
 
-/* ================================
-   Page Load
-================================ */
-@keyframes aura-page-load {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-.aura-page-load {
-  animation: aura-page-load 0.8s ease-out both;
+@keyframes aura-hotspot-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.75; }
+  50% { transform: scale(1.45); opacity: 0.18; }
 }
 
-/* ================================
-   Modal
-================================ */
-@keyframes aura-modal {
-  from {
-    opacity: 0;
-    transform: translateY(20px) scale(0.97);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+.aura-hotspot-pulse {
+  animation: aura-hotspot-pulse 1.8s ease-in-out infinite;
 }
-.aura-modal {
+
+/* Modal */
+@keyframes aura-modal {
+  from { opacity: 0; transform: translate3d(0, 20px, 0) scale(0.97); }
+  to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+}
+
+@keyframes aura-modal-backdrop {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.aura-modal,
+.aura-modal-panel {
   animation: aura-modal 0.35s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
 
-/* ================================
-   Reduced Motion
-================================ */
+.aura-modal-backdrop {
+  animation: aura-modal-backdrop 0.3s ease both;
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .aura-section-reveal,
+  .aura-reveal,
+  .aura-reveal-left,
+  .aura-reveal-right {
+    transform: translate3d(0, 24px, 0);
+  }
+
+  .aura-float {
+    animation-duration: 8s;
+  }
+
+  .aura-marquee,
+  .animate-marquee {
+    animation-duration: 18s;
+  }
+}
+
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
+
   *,
   *::before,
   *::after {
-=======
-.aura-shadow-hover:hover { box-shadow: 0 30px 60px -20px rgba(17, 17, 17, 0.12); transform: translateY(-4px); }
-img, svg, video { max-width: 100%; }
-
-@media (max-width: 767px) {
-  .aura-section-reveal { transform: translate3d(0, 24px, 0); }
-  .aura-reveal { transform: translate3d(0, 24px, 0); }
-  .aura-reveal-left, .aura-reveal-right { transform: translate3d(0, 24px, 0); }
-  .aura-float { animation-duration: 8s; }
-  .animate-marquee { animation-duration: 18s; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  *, *::before, *::after {
->>>>>>> cc50cb00aed2a12c1109c2988eeac6578f61dcf6
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
 }
-<<<<<<< HEAD
-
-/* ================================
-   Responsive Safety
-================================ */
-img,
-video {
-  max-width: 100%;
-  height: auto;
-}
-button,
-a {
-  -webkit-tap-highlight-color: transparent;
-}
-=======
->>>>>>> cc50cb00aed2a12c1109c2988eeac6578f61dcf6
