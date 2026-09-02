@@ -10,7 +10,7 @@ import CartDrawer from './components/CartDrawer'
 import Contact from './components/Contact'
 import InfiniteMarquee from './components/InfiniteMarquee'
 
-function usePageScrollAnimations() {
+function usePageScrollAnimations(currentView) {
   useEffect(() => {
     const targets = document.querySelectorAll('main section, footer')
     if (!targets.length) return
@@ -36,13 +36,13 @@ function usePageScrollAnimations() {
     })
 
     return () => observer.disconnect()
-  }, [])
+  }, [currentView])
 }
 
 export default function App() {
-  usePageScrollAnimations()
-
   const [currentView, setCurrentView] = useState('home')
+  usePageScrollAnimations(currentView)
+
   const [cartItems, setCartItems] = useState([])
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [toastMessage, setToastMessage] = useState(null)
@@ -84,9 +84,7 @@ export default function App() {
     setCartItems(prev => prev.filter(item => `${item.id}-${item.size || 'default'}` !== uniqueKey))
   }
 
-  const handleClearCart = () => {
-    setCartItems([])
-  }
+  const handleClearCart = () => setCartItems([])
 
   return (
     <div className="font-sans antialiased text-[#111111] bg-[#f7f4ee] min-h-screen flex flex-col justify-between">
@@ -108,9 +106,7 @@ export default function App() {
       />
 
       <main className="min-h-screen flex flex-col bg-[#f7f4ee]">
-        {currentView === 'contact' ? (
-          <Contact />
-        ) : (
+        {currentView === 'contact' ? <Contact /> : (
           <div>
             <Hero />
             <Collection onAddToCart={handleAddToCart} />
