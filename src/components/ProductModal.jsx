@@ -60,7 +60,7 @@ export default function ProductModal({ product, onClose, onAddToCart }) {
             </div>
 
             <p className="text-xs text-[#77736c] leading-relaxed">
-              Crafted from conscious luxury textiles. Designed for an effortless silhouette, ensuring durability and enduring elegance for the modern wardrobe.
+              Made for everyday ease, this considered piece brings refined texture and enduring shape to the modern wardrobe.
             </p>
 
            

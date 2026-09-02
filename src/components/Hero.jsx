@@ -12,17 +12,16 @@ export default function Hero() {
             <div className="aura-line"></div>
 
             <span className="aura-label text-[#b59b62] font-semibold">
-              Autumn / Winter 2026
+              Autumn / Winter 2026 — The New Season
             </span>
           </div>
 
           <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-black leading-[1.15] mb-6">
-            Timeless Elegance, Modern Flow
+            Wear the Moment. Keep the Memory.
           </h1>
 
           <p className="text-black text-base lg:text-lg font-normal mb-10 max-w-lg leading-relaxed tracking-wide">
-            Discover statement pieces crafted with conscious intent and
-            uncompromising materiality for the contemporary wardrobe.
+            Discover considered essentials shaped by refined tailoring, elevated textures, and a quieter kind of confidence.
           </p>
 
          
@@ -34,7 +33,7 @@ export default function Hero() {
               <span className="absolute inset-0 w-full h-full bg-[#b59b62] -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
 
               <span className="relative z-10 flex items-center gap-3 group-hover:text-black transition-colors duration-500">
-                Explore Collection
+                Shop the Collection
 
                 <svg
                   className="w-3.5 h-3.5 fill-none stroke-current stroke-2 transform group-hover:translate-x-1.5 transition-transform duration-300"
@@ -50,7 +49,7 @@ export default function Hero() {
               <span className="absolute inset-0 w-full h-full bg-[#b59b62] -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
 
               <span className="relative z-10 flex items-center gap-3 group-hover:text-black transition-colors duration-500">
-                View Lookbook
+                Enter the Lookbook
 
                 <svg
                   className="w-3.5 h-3.5 fill-none stroke-current stroke-2 transform group-hover:translate-x-1.5 transition-transform duration-300"

@@ -22,23 +22,23 @@ export default function CTA() {
         <div className="flex justify-center items-center gap-3 mb-6">
           <div className="h-px w-6 bg-[#b59b62]"></div>
           <span className="text-[10px] font-medium tracking-[0.3em] uppercase text-[#b59b62]">
-            Private Access
+            AURA Circle
           </span>
           <div className="h-px w-6 bg-[#b59b62]"></div>
         </div>
 
        
         <h2 className="font-serif text-3xl md:text-5xl font-light tracking-tight mb-6">
-          Join the Aura Circle
+          A considered wardrobe, delivered first.
         </h2>
 
         <p className="text-[#99958e] text-sm md:text-base font-light mb-10 max-w-lg mx-auto leading-relaxed">
-          Subscribe to receive early notifications on limited seasonal drops, private lookbooks, and invitation-only fashion events.
+          Sign up for first access to new arrivals, private edits, and studio notes from AURA.
         </p>
 
         {submitted ? (
           <div className="py-4 px-6 bg-[#191919] border border-[#b59b62]/40 text-xs uppercase tracking-[0.2em] text-[#b59b62] animate-fade">
-            Welcome to the circle. Check your inbox soon.
+            You are on the list. AURA will be in touch soon.
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 justify-center items-center max-w-md mx-auto">
@@ -62,7 +62,7 @@ export default function CTA() {
           <a 
             href="#collection" 
             className="inline-block text-[10px] uppercase tracking-[0.25em] text-[#99958e] hover:text-[#f7f4ee] transition-colors border-b border-transparent hover:border-[#f7f4ee] pb-0.5">
-            Or explore current collection &rarr;
+            Explore the latest edit &rarr;
           </a>
         </div>
 

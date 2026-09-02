@@ -68,7 +68,7 @@ export default function Navbar({ cartCount = 0, onOpenCart }) {
       </div>
 
       
-      <div className={`md:hidden absolute top-full left-0 w-full bg-[#f7f4ee] border-b border-black/20 shadow-xl transition-all duration-300 ease-in-out overflow-hidden ${isOpen ? 'max-h-96 opacity-150 py-8' : 'max-h-0 opacity-0 py-0'}`}>
+      <div className={`md:hidden absolute top-full left-0 w-full bg-[#f7f4ee] border-b border-black/20 shadow-xl transition-all duration-300 ease-in-out overflow-hidden ${isOpen ? 'max-h-96 opacity-100 py-8' : 'max-h-0 opacity-0 py-0'}`}>
         <nav className="flex flex-col items-center space-y-6 text-xs font-bold tracking-[0.25em] uppercase text-black">
           {['Home', 'Collection', 'Lookbook', 'About', 'Contact'].map((item) => {
             const href = item === 'Home' ? '#' : `#${item.toLowerCase()}`;

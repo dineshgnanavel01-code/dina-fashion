@@ -5,23 +5,23 @@ export default function Footer() {
       <div className="py-4 border-b border-black/15 overflow-hidden bg-black text-[#f7f4ee] relative">
         <div className="flex whitespace-nowrap animate-marquee text-[10px] font-bold tracking-[0.35em] uppercase">
           <div className="flex items-center shrink-0">
-            <span className="mx-6">New Arrivals</span>
+            <span className="mx-6">New Season Arrivals</span>
             <span className="text-[#b59b62] mx-2">&bull;</span>
-            <span className="mx-6">Autumn/Winter Collection</span>
+            <span className="mx-6">Autumn / Winter 2026</span>
             <span className="text-[#b59b62] mx-2">&bull;</span>
-            <span className="mx-6">Timeless Elegance</span>
+            <span className="mx-6">Quietly Distinctive</span>
             <span className="text-[#b59b62] mx-2">&bull;</span>
-            <span className="mx-6">Exclusive Drop</span>
+            <span className="mx-6">Limited Editions</span>
             <span className="text-[#b59b62] mx-2">&bull;</span>
           </div>
           <div className="flex items-center shrink-0" aria-hidden="true">
-            <span className="mx-6">New Arrivals</span>
+            <span className="mx-6">New Season Arrivals</span>
             <span className="text-[#b59b62] mx-2">&bull;</span>
-            <span className="mx-6">Autumn/Winter Collection</span>
+            <span className="mx-6">Autumn / Winter 2026</span>
             <span className="text-[#b59b62] mx-2">&bull;</span>
-            <span className="mx-6">Timeless Elegance</span>
+            <span className="mx-6">Quietly Distinctive</span>
             <span className="text-[#b59b62] mx-2">&bull;</span>
-            <span className="mx-6">Exclusive Drop</span>
+            <span className="mx-6">Limited Editions</span>
             <span className="text-[#b59b62] mx-2">&bull;</span>
           </div>
         </div>
@@ -43,7 +43,7 @@ export default function Footer() {
               </h3>
             </div>
             <p className="text-black/80 text-xs font-semibold leading-relaxed tracking-wider">
-              Crafting conscious, enduring luxury essentials for the modern wardrobe. Designed in silence, worn with intent.
+              Refined essentials for a wardrobe in motion. Designed with intention, made to stay with you.
             </p>
           </div>
 
@@ -70,7 +70,7 @@ export default function Footer() {
               <li><span className="text-black font-extrabold">+91 63697 09863</span></li>
               <li><span className="text-black/60 font-medium">Mon &ndash; Fri: 9am &ndash; 6pm IST</span></li>
               <li className="pt-1 text-black/80 leading-relaxed font-semibold">
-                Aura Fashion Studio<br />
+                AURA Fashion Studio<br />
                 Salem, Tamil Nadu, India
               </li>
             </ul>
@@ -125,7 +125,7 @@ export default function Footer() {
         </div>
 
         <div className="pt-8 border-t border-black/15 flex flex-col sm:flex-row justify-between items-center text-[11px] text-black/70 font-bold tracking-widest">
-          <p>&copy; {new Date().getFullYear()} Aura Fashion Studio. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} AURA Fashion Studio. All rights reserved.</p>
           <div className="flex space-x-8 mt-4 sm:mt-0">
             <a href="#" className="hover:text-black transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-black transition-colors">Terms of Service</a>

@@ -15,8 +15,8 @@ export default function Collection({ onAddToCart }) {
   return (
     <section id="collection" className="aura-container py-24">
       <div className="text-center max-w-xl mx-auto mb-16 space-y-4">
-        <span className="text-xs font-medium tracking-[0.3em] uppercase text-[#77736c]">Curated Selection</span>
-        <h2 className="font-serif text-3xl md:text-4xl uppercase tracking-wide text-[#111111]">The Essentials</h2>
+        <span className="text-xs font-medium tracking-[0.3em] uppercase text-[#77736c]">The AURA Edit</span>
+        <h2 className="font-serif text-3xl md:text-4xl uppercase tracking-wide text-[#111111]">Considered Pieces for Every Day</h2>
         
         <div className="flex flex-wrap justify-center gap-4 pt-6 text-xs uppercase tracking-[0.2em]">
           {categories.map((cat) => (
@@ -46,7 +46,7 @@ export default function Collection({ onAddToCart }) {
 
               <div className="absolute inset-x-0 bottom-0 p-4 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out">
                 <span className="block bg-[#f7f4ee]/95 text-[#111111] text-xs uppercase tracking-[0.25em] py-3 text-center font-medium backdrop-blur-md shadow-lg border border-[#111111]/10 hover:bg-[#111111] hover:text-[#f7f4ee] transition-colors duration-300">
-                  Quick Preview
+                  View the Piece
                 </span>
               </div>
             </div>
