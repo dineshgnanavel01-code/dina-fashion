@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import Collection from './components/Collection'
@@ -10,7 +10,38 @@ import CartDrawer from './components/CartDrawer'
 import Contact from './components/Contact'
 import InfiniteMarquee from './components/InfiniteMarquee'
 
+function usePageScrollAnimations() {
+  useEffect(() => {
+    const targets = document.querySelectorAll('main section, footer')
+    if (!targets.length) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return
+
+          entry.target.classList.add('is-visible')
+          entry.target.querySelectorAll('img').forEach((image) => {
+            image.classList.add('aura-scroll-image-visible')
+          })
+          observer.unobserve(entry.target)
+        })
+      },
+      { threshold: 0.08, rootMargin: '0px 0px -60px 0px' }
+    )
+
+    targets.forEach((target) => {
+      target.classList.add('aura-section-reveal')
+      observer.observe(target)
+    })
+
+    return () => observer.disconnect()
+  }, [])
+}
+
 export default function App() {
+  usePageScrollAnimations()
+
   const [currentView, setCurrentView] = useState('home')
   const [cartItems, setCartItems] = useState([])
   const [isCartOpen, setIsCartOpen] = useState(false)
@@ -66,14 +97,15 @@ export default function App() {
         </div>
       )}
 
-      <Navbar 
-        cartCount={cartCount} 
-        onOpenCart={() => setIsCartOpen(true)} 
+      <Navbar
+        cartCount={cartCount}
+        onOpenCart={() => setIsCartOpen(true)}
         activePage={currentView}
         onNavigate={(page) => {
           setCurrentView(page)
           window.scrollTo({ top: 0, behavior: 'smooth' })
-        }} />
+        }}
+      />
 
       <main className="min-h-screen flex flex-col bg-[#f7f4ee]">
         {currentView === 'contact' ? (
@@ -92,14 +124,14 @@ export default function App() {
 
       <Footer />
 
-      <CartDrawer 
+      <CartDrawer
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
         cartItems={cartItems}
         onUpdateQuantity={handleUpdateQuantity}
         onRemoveItem={handleRemoveItem}
-        onClearCart={handleClearCart}/>
-
+        onClearCart={handleClearCart}
+      />
     </div>
   )
 }
