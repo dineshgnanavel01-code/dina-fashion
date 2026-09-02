@@ -17,21 +17,27 @@ export default function Navbar({ cartCount = 0, onOpenCart }) {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const getHref = (item) => item === 'Home' ? '#' : `#${item.toLowerCase()}`
+  const getHref = (item) => (item === 'Home' ? '#' : `#${item.toLowerCase()}`)
 
   return (
-    <header className={`sticky top-0 z-50 font-sans transition-all duration-500 ${
-      scrolled
-        ? 'bg-[#f7f4ee]/95 backdrop-blur-md shadow-md border-b border-black/20'
-        : 'bg-[#f7f4ee] border-b border-black/15'
-    }`}>
-      <div className={`aura-container grid grid-cols-[1fr_auto_1fr] items-center transition-all duration-500 ${scrolled ? 'h-20' : 'h-20 md:h-24'}`}>
+    <header
+      className={`sticky top-0 z-50 font-sans transition-all duration-500 ${
+        scrolled
+          ? 'bg-[#f7f4ee]/95 backdrop-blur-md shadow-md border-b border-black/20'
+          : 'bg-[#f7f4ee] border-b border-black/15'
+      }`}
+    >
+      <div
+        className={`mx-auto grid w-full max-w-[1440px] grid-cols-[1fr_auto_1fr] items-center px-5 sm:px-8 lg:px-12 transition-all duration-500 ${
+          scrolled ? 'h-[72px]' : 'h-[76px] md:h-[88px]'
+        }`}
+      >
         {/* Left: mobile menu / desktop shopping bag */}
-        <div className="flex items-center justify-start">
+        <div className="flex min-w-0 items-center justify-start">
           <button
             type="button"
             onClick={() => setIsOpen((open) => !open)}
-            className="md:hidden relative flex h-10 w-10 flex-col items-center justify-center gap-1.5 rounded-full border border-black/15 bg-black/[0.03] transition-all duration-300 hover:border-black/40 active:scale-90"
+            className="md:hidden relative flex h-10 w-10 shrink-0 flex-col items-center justify-center gap-1.5 rounded-full border border-black/15 bg-black/[0.03] transition-all duration-300 hover:border-black/40 active:scale-90"
             aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
             aria-expanded={isOpen}
           >
@@ -46,7 +52,7 @@ export default function Navbar({ cartCount = 0, onOpenCart }) {
             className="group hidden md:flex items-center gap-2 rounded-full border border-black/20 bg-black/5 px-4 py-2 transition-all duration-300 hover:border-black hover:bg-black/10 active:scale-95"
             aria-label={`Shopping Bag, ${cartCount} items`}
           >
-            <svg className="h-4 w-4 stroke-black stroke-2 transition-transform duration-300 group-hover:scale-110" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+            <svg className="h-4 w-4 shrink-0 stroke-black stroke-2 transition-transform duration-300 group-hover:scale-110" fill="none" viewBox="0 0 24 24" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974a1.125 1.125 0 011.119 1.007z" />
             </svg>
             <span className="text-[11px] font-bold tracking-widest uppercase text-black">Bag</span>
@@ -54,21 +60,25 @@ export default function Navbar({ cartCount = 0, onOpenCart }) {
           </button>
         </div>
 
-        {/* Center: brand */}
-        <a href="#" className="group flex items-center justify-center gap-2.5 justify-self-center" aria-label="AURA home">
-          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-black text-[#f7f4ee] shadow-sm transition-all duration-300 group-hover:bg-[#b59b62] group-hover:scale-105">
+        {/* Center: brand — centered by the 3-column layout */}
+        <a
+          href="#"
+          className="group flex min-w-0 items-center justify-center gap-2 justify-self-center"
+          aria-label="AURA home"
+        >
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-black text-[#f7f4ee] shadow-sm transition-all duration-300 group-hover:bg-[#b59b62] group-hover:scale-105 sm:h-9 sm:w-9">
             <svg className="h-4 w-4 fill-none stroke-current stroke-2" viewBox="0 0 24 24" aria-hidden="true">
               <polygon points="12,4 20,20 4,20" />
             </svg>
           </div>
-          <span className="font-serif text-2xl sm:text-3xl tracking-[0.16em] sm:tracking-[0.2em] text-black font-bold transition-opacity duration-300 group-hover:opacity-75">
+          <span className="font-serif text-xl sm:text-2xl md:text-3xl tracking-[0.14em] sm:tracking-[0.18em] text-black font-bold transition-opacity duration-300 group-hover:opacity-75">
             AURA
           </span>
         </a>
 
         {/* Right: desktop navigation / mobile shopping bag */}
-        <div className="flex items-center justify-end">
-          <nav className="hidden md:flex items-center gap-7 lg:gap-10 text-[11px] font-bold tracking-[0.2em] uppercase text-black">
+        <div className="flex min-w-0 items-center justify-end">
+          <nav className="hidden md:flex items-center justify-end gap-5 lg:gap-8 xl:gap-10 text-[11px] font-bold tracking-[0.16em] lg:tracking-[0.2em] uppercase text-black">
             {navItems.map((item) => (
               <a
                 key={item}
@@ -83,7 +93,7 @@ export default function Navbar({ cartCount = 0, onOpenCart }) {
           <button
             type="button"
             onClick={onOpenCart}
-            className="md:hidden group flex items-center gap-1.5 rounded-full border border-black/20 bg-black/5 px-3 py-2 transition-all duration-300 hover:border-black hover:bg-black/10 active:scale-95"
+            className="md:hidden group flex h-10 shrink-0 items-center gap-1.5 rounded-full border border-black/20 bg-black/5 px-3 transition-all duration-300 hover:border-black hover:bg-black/10 active:scale-95"
             aria-label={`Shopping Bag, ${cartCount} items`}
           >
             <svg className="h-4 w-4 stroke-black stroke-2" fill="none" viewBox="0 0 24 24" aria-hidden="true">
@@ -97,10 +107,10 @@ export default function Navbar({ cartCount = 0, onOpenCart }) {
       {/* Mobile navigation */}
       <div
         className={`md:hidden absolute left-0 top-full w-full overflow-hidden border-b border-black/20 bg-[#f7f4ee]/98 shadow-xl backdrop-blur-md transition-all duration-400 ease-out ${
-          isOpen ? 'max-h-[420px] translate-y-0 opacity-100' : 'pointer-events-none max-h-0 -translate-y-2 opacity-0'
+          isOpen ? 'pointer-events-auto max-h-[420px] translate-y-0 opacity-100' : 'pointer-events-none max-h-0 -translate-y-2 opacity-0'
         }`}
       >
-        <nav className="flex flex-col px-6 py-6 text-center text-xs font-bold tracking-[0.25em] uppercase text-black">
+        <nav className="mx-auto flex max-w-[1440px] flex-col px-5 py-4 text-center text-xs font-bold tracking-[0.22em] uppercase text-black sm:px-8">
           {navItems.map((item, index) => (
             <a
               key={item}
