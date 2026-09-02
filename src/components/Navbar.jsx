@@ -45,6 +45,24 @@ export default function Navbar({ cartCount = 0, onOpenCart }) {
   }, [])
 
   useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') setIsOpen(false)
+    }
+
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) setIsOpen(false)
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    window.addEventListener('resize', handleResize)
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
+
+  useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : ''
     return () => {
       document.body.style.overflow = ''
@@ -61,13 +79,11 @@ export default function Navbar({ cartCount = 0, onOpenCart }) {
           : 'border-b border-black/10 bg-[#f7f4ee]'
       }`}
     >
-      {/* The three-column grid keeps the AURA logo perfectly centered. */}
       <div
         className={`mx-auto grid w-full max-w-[1440px] grid-cols-[1fr_auto_1fr] items-center px-4 sm:px-6 lg:px-10 xl:px-12 ${
           scrolled ? 'h-[68px] sm:h-[72px]' : 'h-[74px] sm:h-[76px]'
         }`}
       >
-        {/* LEFT: bag on desktop, hamburger on tablet/mobile */}
         <div className="flex min-w-0 items-center justify-start">
           <button
             type="button"
@@ -75,8 +91,9 @@ export default function Navbar({ cartCount = 0, onOpenCart }) {
             className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-black/15 transition-all duration-300 hover:border-black/40 hover:bg-black/[0.04] active:scale-90 lg:hidden"
             aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
             aria-expanded={isOpen}
+            aria-controls="aura-mobile-menu"
           >
-            <span className="relative block h-4 w-5">
+            <span className="relative block h-4 w-5" aria-hidden="true">
               <span
                 className={`absolute left-0 top-0 h-[1.5px] w-5 origin-center bg-black transition-all duration-300 ${
                   isOpen ? 'top-[7px] rotate-45' : ''
@@ -107,7 +124,6 @@ export default function Navbar({ cartCount = 0, onOpenCart }) {
           </button>
         </div>
 
-        {/* CENTER: AURA */}
         <a
           href="#"
           onClick={closeMenu}
@@ -129,7 +145,6 @@ export default function Navbar({ cartCount = 0, onOpenCart }) {
           </span>
         </a>
 
-        {/* RIGHT: desktop links, bag on tablet/mobile */}
         <div className="flex min-w-0 items-center justify-end">
           <nav
             aria-label="Main navigation"
@@ -159,21 +174,23 @@ export default function Navbar({ cartCount = 0, onOpenCart }) {
         </div>
       </div>
 
-      {/* Mobile/tablet menu */}
       <div
+        id="aura-mobile-menu"
+        aria-hidden={!isOpen}
         className={`absolute left-0 top-full w-full overflow-hidden border-b border-black/10 bg-[#f7f4ee]/98 shadow-2xl backdrop-blur-xl transition-[max-height,opacity,transform] duration-500 ease-out lg:hidden ${
           isOpen
-            ? 'pointer-events-auto max-h-[420px] translate-y-0 opacity-100'
+            ? 'pointer-events-auto max-h-[360px] translate-y-0 opacity-100'
             : 'pointer-events-none max-h-0 -translate-y-2 opacity-0'
         }`}
       >
-        <nav aria-label="Mobile navigation" className="px-5 pb-5 pt-2 sm:px-8">
+        <nav aria-label="Mobile navigation" className="mx-auto w-full max-w-[1440px] px-5 pb-5 pt-2 sm:px-8">
           {navItems.map((item, index) => (
             <a
               key={item.label}
               href={item.href}
               onClick={closeMenu}
-              className="group flex items-center justify-between border-b border-black/10 py-4 text-[11px] font-semibold uppercase tracking-[0.22em] text-black transition-all duration-300 hover:pl-2 hover:text-[#a58952]"
+              tabIndex={isOpen ? 0 : -1}
+              className="group flex min-h-[48px] items-center justify-between border-b border-black/10 py-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-black transition-all duration-300 hover:pl-2 hover:text-[#a58952]"
               style={{ transitionDelay: isOpen ? `${index * 35}ms` : '0ms' }}
             >
               <span>{item.label}</span>
