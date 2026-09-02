@@ -1,8 +1,10 @@
-export default function Footer() {
-  const marqueeItems = ['NEW ARRIVALS', 'NEW ARRIVALS', 'NEW ARRIVALS', 'NEW ARRIVALS']
+import { useEffect, useRef } from 'react'
 
-  const MarqueeGroup = ({ hidden = false }) => (
-    <div className="footer-marquee-group gap-8 pr-8" aria-hidden={hidden}>
+const marqueeItems = ['NEW ARRIVALS', 'NEW ARRIVALS', 'NEW ARRIVALS', 'NEW ARRIVALS']
+
+function MarqueeGroup({ groupRef, hidden = false }) {
+  return (
+    <div ref={groupRef} className="footer-marquee-group gap-8 pr-8" aria-hidden={hidden}>
       {marqueeItems.map((item, index) => (
         <span key={`${item}-${index}`} className="inline-flex items-center gap-8 whitespace-nowrap">
           <span>{item}</span>
@@ -11,48 +13,81 @@ export default function Footer() {
       ))}
     </div>
   )
+}
+
+function InfiniteFooterMarquee() {
+  const trackRef = useRef(null)
+  const firstGroupRef = useRef(null)
+  const animationFrameRef = useRef(null)
+  const positionRef = useRef(0)
+  const pausedRef = useRef(false)
+  const lastTimeRef = useRef(null)
+
+  useEffect(() => {
+    const track = trackRef.current
+    const firstGroup = firstGroupRef.current
+    if (!track || !firstGroup) return undefined
+
+    const speed = 42
+
+    const animate = (time) => {
+      if (lastTimeRef.current === null) lastTimeRef.current = time
+      const delta = Math.min(time - lastTimeRef.current, 32)
+      lastTimeRef.current = time
+
+      if (!pausedRef.current) {
+        positionRef.current -= (speed * delta) / 1000
+        const loopWidth = firstGroup.offsetWidth
+        if (loopWidth > 0 && Math.abs(positionRef.current) >= loopWidth) {
+          positionRef.current += loopWidth
+        }
+        track.style.transform = `translate3d(${positionRef.current}px, 0, 0)`
+      }
+
+      animationFrameRef.current = requestAnimationFrame(animate)
+    }
+
+    const handleResize = () => {
+      const loopWidth = firstGroup.offsetWidth
+      if (loopWidth > 0 && Math.abs(positionRef.current) >= loopWidth) {
+        positionRef.current %= loopWidth
+      }
+    }
+
+    window.addEventListener('resize', handleResize)
+    animationFrameRef.current = requestAnimationFrame(animate)
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+      if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current)
+    }
+  }, [])
 
   return (
-    <footer className="bg-white text-black font-sans border-t border-black/15">
-      <style>{`
-        @keyframes footerMarquee {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        .footer-animate-marquee {
-          display: flex;
-          width: max-content;
-          min-width: max-content;
-          animation: footerMarquee 22s linear infinite;
-          will-change: transform;
-        }
-        .footer-animate-marquee:hover {
-          animation-play-state: paused;
-        }
-        .footer-marquee-group {
-          display: flex;
-          flex: 0 0 auto;
-          align-items: center;
-        }
-        @media (max-width: 767px) {
-          .footer-animate-marquee {
-            animation-duration: 14s;
-          }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .footer-animate-marquee {
-            animation: none;
-            transform: translateX(0);
-          }
-        }
-      `}</style>
-
-      <div className="py-4 border-b border-black/15 overflow-hidden bg-black text-[#f7f4ee] relative">
-        <div className="footer-animate-marquee text-[10px] font-bold tracking-[0.35em] uppercase" aria-label="New arrivals marquee">
-          <MarqueeGroup />
-          <MarqueeGroup hidden />
-        </div>
+    <div
+      className="overflow-hidden py-4 border-b border-black/15 bg-black text-[#f7f4ee] relative"
+      onMouseEnter={() => { pausedRef.current = true }}
+      onMouseLeave={() => {
+        pausedRef.current = false
+        lastTimeRef.current = null
+      }}
+    >
+      <div
+        ref={trackRef}
+        className="flex w-max min-w-max text-[10px] font-bold tracking-[0.35em] uppercase"
+        aria-label="New arrivals marquee"
+      >
+        <MarqueeGroup groupRef={firstGroupRef} />
+        <MarqueeGroup hidden />
       </div>
+    </div>
+  )
+}
+
+export default function Footer() {
+  return (
+    <footer className="bg-white text-black font-sans border-t border-black/15">
+      <InfiniteFooterMarquee />
 
       <div className="aura-container py-24">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20">
